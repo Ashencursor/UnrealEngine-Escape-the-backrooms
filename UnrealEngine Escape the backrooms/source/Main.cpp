@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include <iostream>
 #include "dependencies/kiero/kiero.h"
+#include "gui/gui.h"
+
 //#include "dependencies/CppSDK/SDK/Engine_classes.hpp"
 
 // Basic.cpp was added to the VS project
@@ -14,17 +16,16 @@ DWORD MainThread(HMODULE Module)
     freopen_s(&Dummy, "CONOUT$", "w", stdout);
     freopen_s(&Dummy, "CONIN$", "r", stdin);
 
+    // Setup Hooks
+    g_D3D11Hook.initialize();
 
 
-    bool init_hook = false;
     do
     {
-        if (kiero::init(kiero::RenderType::D3D11) == kiero::Status::Success)
-        {
-            //kiero::bind(8, reinterpret_cast<void**>(&oPresent), hkPresent);
-            init_hook = true;
+        if (GetAsyncKeyState(VK_INSERT) & 1) {
+            break;
         }
-    } while (!init_hook);
+    } while (true);
     return 0;
 }
 

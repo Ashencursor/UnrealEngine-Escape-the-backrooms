@@ -26,13 +26,16 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 		if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))
 		{
 			pDevice->GetImmediateContext(&pContext);
+
 			DXGI_SWAP_CHAIN_DESC sd;
 			pSwapChain->GetDesc(&sd);
 			hwnd = sd.OutputWindow;
+
 			ID3D11Texture2D* pBackBuffer;
 			pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
 			pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 			pBackBuffer->Release();
+
 			oWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)hkWndProc);
 			initImGui();
 			isSetup = true;
@@ -51,7 +54,7 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 	std::cout << "Rendering\n";
 	ImGui::Render();
 
-	pContext->OMSetRenderTargets(1, &pRenderTargetView, NULL);
+	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
@@ -70,13 +73,13 @@ LRESULT __stdcall Gui::D3D11Hook::hkWndProc(const HWND hWnd, UINT uMsg, WPARAM w
 }
 
 // Constructor/Destructor
-Gui::D3D11Hook::D3D11Hook() {}
+Gui::D3D11Hook::D3D11Hook() = default;
 Gui::D3D11Hook::~D3D11Hook() { shutdown(); }
 
 bool Gui::D3D11Hook::initialize()
 {
     if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success) {
-        std::cerr << "Failed to initialize Kiero!" << std::endl;
+        std::cerr << "[-] Failed to initialize Kiero!" << std::endl;
         return false;
     }
 
@@ -99,3 +102,4 @@ void Gui::D3D11Hook::initImGui()
 void Gui::D3D11Hook::shutdown() {
     kiero::shutdown();
 }
+

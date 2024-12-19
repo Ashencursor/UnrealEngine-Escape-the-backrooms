@@ -31,15 +31,18 @@ namespace Gui
 		static WNDPROC oWndProc;
 		static Present oPresent;
 		static ResizeBuffers oResizeBuffers; // Original ResizeBuffers function pointer
-
+	
+		// ImGui
+		static void initImGui();
+	public:
 		// Special members 
 		D3D11Hook();
 		~D3D11Hook();
 
-		// ImGui
-		static void initImGui();
-	public:
+		// For class
 		static bool initialize();
 		static void shutdown();
 	};
 }
+
+inline Gui::D3D11Hook g_D3D11Hook; // Declare the global instance
