@@ -5,18 +5,10 @@
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // static initialization
-ID3D11Device* Gui::D3D11Hook::pDevice = nullptr;
-ID3D11DeviceContext* Gui::D3D11Hook::pContext = nullptr;
-ID3D11RenderTargetView* Gui::D3D11Hook::pRenderTargetView = nullptr;
-HWND Gui::D3D11Hook::hwnd = nullptr;
 
 
-/*Error: 
-unresolved external symbol "private: static __int64 (__cdecl* Gui::D3D11Hook::oWndProc)(struct HWND__ *,unsigned int,unsigned __int64,__int64)" (?oWndProc@D3D11Hook@Gui@@0P6A_JPEAUHWND__@@I_K_J@ZEA)
-*/
-WNDPROC Gui::D3D11Hook::oWndProc = nullptr;
-Gui::Present Gui::D3D11Hook::oPresent = nullptr;
-Gui::ResizeBuffers Gui::D3D11Hook::oResizeBuffers = nullptr;
+
+
 
 
 HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
@@ -36,7 +28,10 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 			pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 			pBackBuffer->Release();
 
-			oWndProc = (WNDPROC)SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR)hkWndProc);
+			oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(+[](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)->LRESULT {
+				return D3D11Hook::getInstance().hkWndProc(hWnd, uMsg, wParam, lParam);
+			})));
+
 			initImGui();
 			isSetup = true;
 		}
@@ -59,12 +54,13 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
 
+
 HRESULT __stdcall Gui::D3D11Hook::hkResizeBuffers(IDXGISwapChain* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags)
 {
     return oResizeBuffers(pSwapChain, BufferCount, Width, Height, NewFormat, SwapChainFlags);
 }
 
-LRESULT __stdcall Gui::D3D11Hook::hkWndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+LRESULT __stdcall Gui::D3D11Hook::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
 	if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 		return true;
@@ -84,8 +80,12 @@ bool Gui::D3D11Hook::initialize()
     }
 
     // Hook Present and ResizeBuffers
-    kiero::bind(8, reinterpret_cast<void**>(&oPresent), hkPresent);						// Index 8 is Present
-    kiero::bind(13, reinterpret_cast<void**>(&oResizeBuffers), hkResizeBuffers);        // Index 8 is Present
+	kiero::bind(8, reinterpret_cast<void**>(&oPresent), +[](IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags) {
+		return getInstance().hkPresent(pSwapChain, SyncInterval, Flags);
+		});				// Index 8 is Present
+    kiero::bind(13, reinterpret_cast<void**>(&oResizeBuffers), +[](IDXGISwapChain* swapChain, UINT count, UINT width, UINT height, DXGI_FORMAT format, UINT flags) -> HRESULT {
+		return D3D11Hook::getInstance().hkResizeBuffers(swapChain, count, width, height, format, flags);
+		});				// Index 13 is ResizeBuffers
 
     return true;
 }

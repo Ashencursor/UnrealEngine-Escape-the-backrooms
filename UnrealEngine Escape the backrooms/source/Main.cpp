@@ -17,8 +17,8 @@ DWORD MainThread(HMODULE Module)
     freopen_s(&Dummy, "CONIN$", "r", stdin);
 
     // Setup Hooks
-    g_D3D11Hook.initialize();
-
+    Gui::D3D11Hook& DirectXHook = Gui::D3D11Hook::getInstance();
+    DirectXHook.initialize();
 
     do
     {
