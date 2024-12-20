@@ -11,7 +11,10 @@ namespace Gui
 {
 	typedef HRESULT(__stdcall* Present) (IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 	typedef HRESULT(__stdcall* ResizeBuffers)(IDXGISwapChain* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
-	inline bool isSetup = false;
+	
+	inline bool is_setup = false;
+	inline bool is_active = false;
+	inline POINT cursor_pos{};
 
 	class D3D11Hook {
 	private:
@@ -33,10 +36,12 @@ namespace Gui
 	
 		// ImGui
 		void initImGui();
+		void RenderMenu();
+		void RenderCustomCursor();
 
 		// Special members, private to prevent instantiation 
-		D3D11Hook();
-		~D3D11Hook();
+		D3D11Hook() = default;
+		~D3D11Hook() { shutdown(); }
 
 		// Delete so nobody can create another instance of the class
 		D3D11Hook(const D3D11Hook&) = delete;

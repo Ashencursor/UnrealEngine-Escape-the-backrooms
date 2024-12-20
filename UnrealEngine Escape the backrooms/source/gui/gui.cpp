@@ -1,8 +1,9 @@
 #include "gui.h"
 #include <d3d11.h>
 #include <iostream>
+#include "config.h"
 
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 // static initialization
 
@@ -13,7 +14,7 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam
 
 HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
-	if (!isSetup)
+	if (!Gui::is_setup)
 	{
 		if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&pDevice)))
 		{
@@ -33,7 +34,7 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 			})));
 
 			initImGui();
-			isSetup = true;
+			Gui::is_setup = true;
 		}
 
 		else
@@ -44,9 +45,11 @@ HRESULT __stdcall Gui::D3D11Hook::hkPresent(IDXGISwapChain* pSwapChain, UINT Syn
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("ImGui Window");
-	ImGui::End();
-	std::cout << "Rendering\n";
+	if (Gui::is_active) {
+		RenderCustomCursor();
+		RenderMenu();
+	}
+
 	ImGui::Render();
 
 	pContext->OMSetRenderTargets(1, &pRenderTargetView, nullptr);
@@ -62,16 +65,31 @@ HRESULT __stdcall Gui::D3D11Hook::hkResizeBuffers(IDXGISwapChain* pSwapChain, UI
 
 LRESULT __stdcall Gui::D3D11Hook::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 
-	if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
-		return true;
+	if (Gui::is_active) {
+		if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
+			return true;
+		// Can stop the in game mouse from moving
+		if (uMsg == WM_MOUSEMOVE || uMsg == WM_LBUTTONDOWN || uMsg == WM_RBUTTONDOWN) {
+			// Let ImGui handle the mouse input instead of the game
+			return 0; // Return 0 to stop the game from handling the input
+		}
+	}
 
-	return CallWindowProc(Gui::D3D11Hook::oWndProc, hWnd, uMsg, wParam, lParam);
+	switch (uMsg)
+	{
+	case WM_KEYUP:
+		if (wParam == VK_F9)
+		{
+			// Handle F9 key release
+			Gui::is_active = !Gui::is_active;
+			ShowCursor(Gui::is_active ? FALSE : TRUE);
+		}
+		break;
+	}
+	return CallWindowProc(oWndProc, hWnd, uMsg, wParam, lParam);
 }
 
-// Constructor/Destructor
-Gui::D3D11Hook::D3D11Hook() = default;
-Gui::D3D11Hook::~D3D11Hook() { shutdown(); }
-
+// Hook rendering stuff
 bool Gui::D3D11Hook::initialize()
 {
     if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success) {
@@ -100,6 +118,35 @@ void Gui::D3D11Hook::initImGui()
 }
 
 void Gui::D3D11Hook::shutdown() {
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+
     kiero::shutdown();
 }
 
+void Gui::D3D11Hook::RenderMenu()
+{
+	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
+	
+
+	// FOV Changer
+	ImGui::Checkbox("Fov Changer", &Config::fov_changer);
+	if (Config::fov_changer)
+		ImGui::SliderFloat("Fov Value", &Config::fov_value, 0.0f, 180.0f);
+	else Config::fov_value = 90.0f;
+
+	ImGui::End();
+}
+
+void Gui::D3D11Hook::RenderCustomCursor() {
+	// Get the current position of the system cursor
+	GetCursorPos(&Gui::cursor_pos);
+	ScreenToClient(hwnd, &Gui::cursor_pos);
+
+	// Draw a small black rectangle at the cursor position
+	ImVec2 rectStart = ImVec2(Gui::cursor_pos.x, Gui::cursor_pos.y);
+	ImVec2 rectEnd = ImVec2(Gui::cursor_pos.x + 10, Gui::cursor_pos.y + 10);
+
+	ImGui::GetForegroundDrawList()->AddRectFilled(rectStart, rectEnd, IM_COL32(0, 0, 0, 255)); // Black rectangle
+}
