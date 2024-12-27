@@ -3,7 +3,7 @@
 #include "dependencies/kiero/kiero.h"
 #include "gui/gui.h"
 #include "dependencies/CppSDK/SDK/Engine_classes.hpp"
-#include "gui/config.h"
+#include "config/config.h"
 
 // Basic.cpp was added to the VS project
 // Engine_functions.cpp was added to the VS project
@@ -24,8 +24,7 @@ DWORD MainThread(HMODULE Module)
     // UE info
     /* Functions returning "static" instances */
     SDK::UEngine* Engine = SDK::UEngine::GetEngine();
-    SDK::UWorld* World = SDK::UWorld::GetWorld();
-
+    SDK::UWorld* World = SDK::UWorld::GetWorld(); 
     /* Getting the PlayerController, World, OwningGameInstance, ... should all be checked not to be nullptr! */
     SDK::APlayerController* MyController = World->OwningGameInstance->LocalPlayers[0]->PlayerController;
 
@@ -34,6 +33,7 @@ DWORD MainThread(HMODULE Module)
         if (GetAsyncKeyState(VK_DELETE) & 1) {
             break;
         }
+
         // Main functionality below
         MyController->FOV(Config::fov_value);
     } while (true);

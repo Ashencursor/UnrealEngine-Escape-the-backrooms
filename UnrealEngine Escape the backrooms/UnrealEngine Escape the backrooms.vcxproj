@@ -503,6 +503,9 @@
     <ClCompile Include="source\dependencies\minhook\hook.c" />
     <ClCompile Include="source\dependencies\minhook\trampoline.c" />
     <ClCompile Include="source\gui\gui.cpp" />
+    <ClCompile Include="source\Hooks\Callbacks\Present.cpp" />
+    <ClCompile Include="source\Hooks\Callbacks\ResizeBuffers.cpp" />
+    <ClCompile Include="source\Hooks\Callbacks\WndProc.cpp" />
     <ClCompile Include="source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1529,8 +1532,10 @@
     <ClInclude Include="source\dependencies\minhook\hde\table64.h" />
     <ClInclude Include="source\dependencies\minhook\include\MinHook.h" />
     <ClInclude Include="source\dependencies\minhook\trampoline.h" />
+    <ClInclude Include="source\gui\dx11.h" />
     <ClInclude Include="source\gui\gui.h" />
-    <ClInclude Include="source\gui\config.h" />
+    <ClInclude Include="source\config\config.h" />
+    <ClInclude Include="source\Hooks\callbacks.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\dependencies\CppSDK\NameCollisions.inl" />

@@ -4,40 +4,33 @@
 #include "../dependencies/imgui/imgui_impl_win32.h"
 #include "../dependencies/kiero/kiero.h"
 #include <d3d11.h>
+#include "../Hooks/callbacks.h"
 
 
 
 namespace Gui
 {
-	typedef HRESULT(__stdcall* Present) (IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
-	typedef HRESULT(__stdcall* ResizeBuffers)(IDXGISwapChain* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
-	
 	inline bool is_setup = false;
 	inline bool is_active = false;
 	inline POINT cursor_pos{};
 
+	void initImGui();
+	void RenderMenu();
+	void RenderCustomCursor();
+
 	class D3D11Hook {
 	private:
 		// Hooked stuff
-		HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
-		HRESULT __stdcall hkResizeBuffers(IDXGISwapChain* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
-		LRESULT __stdcall hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
+		
 		// For D3D11
-		HWND hwnd;
-		ID3D11Device* pDevice;
-		ID3D11DeviceContext* pContext;
-		ID3D11RenderTargetView* pRenderTargetView;
 
 		// Storing addresses of original functions
-		WNDPROC oWndProc;
-		Present oPresent;
-		ResizeBuffers oResizeBuffers; // Original ResizeBuffers function pointer
+		WNDPROC										oWndProc;
+		Callback::Present::Present_t				oPresent;
+		Callback::ResizeBuffers::ResizeBuffers_t	oResizeBuffers; // Original ResizeBuffers function pointer
 	
 		// ImGui
-		void initImGui();
-		void RenderMenu();
-		void RenderCustomCursor();
+		
 
 		// Special members, private to prevent instantiation 
 		D3D11Hook() = default;
@@ -57,4 +50,3 @@ namespace Gui
 		void shutdown();
 	};
 }
-

@@ -57,9 +57,6 @@
     <ClCompile Include="source\dependencies\imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\gui\gui.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\dependencies\CppSDK\SDK\AC_Swimming_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1132,6 +1129,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\dependencies\CppSDK\SDK\XShip_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\gui\gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Hooks\Callbacks\Present.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Hooks\Callbacks\WndProc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Hooks\Callbacks\ResizeBuffers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -2264,7 +2273,7 @@
     <ClInclude Include="source\dependencies\CppSDK\SDK\BTService_CheckVisiblePlayers_classes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\gui\config.h">
+    <ClInclude Include="source\config\config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\dependencies\CppSDK\SDK\BTService_CheckVisiblePlayers_parameters.hpp">
@@ -4209,6 +4218,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\dependencies\CppSDK\SDK\XShip_structs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Hooks\callbacks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\gui\dx11.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
