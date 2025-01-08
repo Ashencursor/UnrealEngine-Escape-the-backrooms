@@ -15,7 +15,7 @@ void dllunload()
 
 
 	std::cout << "[...] Execution at dllunload()\n";
-	Sleep(1000);
+	Sleep(5000);
 
 	//!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
 	fclose(stdout);
