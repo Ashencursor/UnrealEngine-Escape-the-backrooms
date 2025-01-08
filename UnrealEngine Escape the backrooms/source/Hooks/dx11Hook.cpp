@@ -4,7 +4,7 @@
 #include "callbacks.h"
 #include "../dependencies/imgui/imgui_impl_dx11.h"
 #include "../dependencies/imgui/imgui_impl_win32.h"
-
+#include "../gui/gui.h"
 
 // Hook rendering stuff
 bool Hooks::DX11Hook::initialize()
@@ -26,9 +26,13 @@ bool Hooks::DX11Hook::initialize()
 }
 
 void Hooks::DX11Hook::shutdown() {
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
+	if (!SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
+		std::cout << "[-] Failed to set original wndproc\n";
+	}
 
+	Gui::destoryImGui();
+	Gui::is_setup = false;
+	Gui::is_active = false;
 	kiero::shutdown();
+	Callback::Present::uninject = true;
 }

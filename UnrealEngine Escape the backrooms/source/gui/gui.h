@@ -19,12 +19,13 @@ namespace Gui
 
 		inline void** swapChainVFT = nullptr;
 	}
-
 	inline bool is_setup = false;
 	inline bool is_active = false;
+	inline int tab = 0;
 	inline POINT cursor_pos{};
 
 	void initImGui();
-	void RenderMenu();
-	void RenderCustomCursor();
+	void destoryImGui();
+	void renderMainMenu();
+	void renderCustomCursor();
 }

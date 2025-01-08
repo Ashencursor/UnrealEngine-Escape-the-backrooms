@@ -3,13 +3,8 @@
 #include <iostream>
 #include "../config/config.h"
 
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-
-// static initialization
 
 
-
-// Hook rendering stuff
 void Gui::initImGui()
 {
 	ImGui::CreateContext();
@@ -19,20 +14,73 @@ void Gui::initImGui()
 	ImGui_ImplDX11_Init(DX11Resources::pDevice, DX11Resources::pContext);
 }
 
-void Gui::RenderMenu()
+void Gui::destoryImGui()
 {
-	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
 
-	// FOV Changer
+
+void menuTabBar() 
+{
+	if (ImGui::BeginTabBar("Tabs")) 
+	{
+		if (ImGui::TabItemButton("Aimbot")) 
+		{
+			Gui::tab = 0;
+		}
+		if (ImGui::TabItemButton("Visuals")) 
+		{
+			Gui::tab = 1;
+		}
+		if (ImGui::TabItemButton("Exploits")) 
+		{
+			Gui::tab = 2;
+		}
+	}
+	ImGui::EndTabBar();
+}
+void menuAimbotTab() 
+{
+
+}
+void menuVisualsTab() 
+{
+
+}
+void menuExploitsTab()
+{
+	// FOV
 	ImGui::Checkbox("Fov Changer", &Config::fov_changer);
 	if (Config::fov_changer)
 		ImGui::SliderFloat("Fov Value", &Config::fov_value, 0.0f, 180.0f);
 	else Config::fov_value = 90.0f;
 
+}
+void Gui::renderMainMenu() {
+	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
+	menuTabBar();
+	switch (Gui::tab) 
+	{
+	case 0:
+		menuAimbotTab();
+		break;
+	case 1:
+		menuVisualsTab();
+		break;
+	case 2:
+		menuExploitsTab();
+		break;
+	default:
+		Gui::tab = 0;
+		break;
+	}
 	ImGui::End();
 }
 
-void Gui::RenderCustomCursor() {
+void Gui::renderCustomCursor() 
+{
 	// Get the current position of the system cursor
 	GetCursorPos(&Gui::cursor_pos);
 	ScreenToClient(DX11Resources::hwnd, &Gui::cursor_pos);

@@ -7,15 +7,6 @@ namespace Hooks
 {
 	class DX11Hook {
 	private:
-		// Hooked stuff
-
-		// For D3D11
-
-		// Storing addresses of original functions
-
-		// ImGui
-
-
 		// Special members, private to prevent instantiation 
 		DX11Hook() = default;
 		~DX11Hook() { shutdown(); }

@@ -14,7 +14,7 @@ void createConsole() {
     freopen_s(&Dummy, "CONOUT$", "w", stdout);
     freopen_s(&Dummy, "CONIN$", "r", stdin);
 }
-DWORD MainThread(HMODULE Module)
+void MainThread(HMODULE hModule)
 {
     createConsole();
 
@@ -31,21 +31,19 @@ DWORD MainThread(HMODULE Module)
 
     do
     {
-        if (GetAsyncKeyState(VK_DELETE) & 1) {
-            break;
-        }
-
         // Main functionality below
-        MyController->FOV(Config::fov_value);
-    } while (true);
+
+    } while (!Callback::Present::uninject);// While uninject is false run the main loop(although I dont nececarly have to bc hooking functions does the job itself
+
+    //!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
+    fclose(stdout);
+    fclose(stdin);
+    fclose(stderr);
+    FreeConsole();
+    FreeLibraryAndExitThread(hModule, 0);
 
     // Make sure program is fully shutdown before returning
-    bool finished = false;
-    do {
-        Hooks::DX11Hook::getInstance().shutdown();
-    } while (!finished);
-
-    return 0;
+    std::cout << "uninjected\n";
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved)
