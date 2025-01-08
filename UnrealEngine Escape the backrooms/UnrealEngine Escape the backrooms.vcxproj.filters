@@ -4226,9 +4226,6 @@
     <ClInclude Include="source\Hooks\callbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\gui\dx11.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Hooks\dx11Hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>

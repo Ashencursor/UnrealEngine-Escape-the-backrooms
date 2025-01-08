@@ -2,7 +2,6 @@
 #include <d3d11.h>
 #include <iostream>
 #include "../config/config.h"
-#include "dx11.h"
 
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

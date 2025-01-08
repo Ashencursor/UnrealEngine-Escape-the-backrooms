@@ -5,22 +5,26 @@ extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wPara
 
 LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (Gui::is_active) {
-		if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
-			return true;
+	/*The function below only works if ImGui is active and rendering, so ImGui::Begin/end*/
+	// Pass the message to ImGui's handler first
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam)) {
+		// If ImGui handled the message, return immediately
+		return true;
 	}
 
-	
-	switch (uMsg)
+
+	// Handle Imgui toggle
+	if (uMsg == WM_KEYUP && wParam == VK_F9)
 	{
-	case WM_KEYUP:
-		if (wParam == VK_F9)
-		{
-			// Handle F9 key release
-			Gui::is_active = !Gui::is_active;
-			ShowCursor(Gui::is_active ? FALSE : TRUE);
-		}
-		break;
+		Gui::is_active = !Gui::is_active;
+		ShowCursor(Gui::is_active ? FALSE : TRUE);
+		return 0; // Mark as handled
 	}
+
+	// If menu is open we stop game from getting input
+	if (Gui::is_active) {
+		return 0;
+	}
+
 	return CallWindowProc(oWndProc, hWnd, uMsg, wParam, lParam);
 }
