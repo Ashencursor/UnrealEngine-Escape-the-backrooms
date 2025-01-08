@@ -5,10 +5,12 @@
 #include "dependencies/CppSDK/SDK/Engine_classes.hpp"
 #include "config/config.h"
 #include "Hooks/dx11Hook.h"
+#include "globals.h"
 
 // Basic.cpp was added to the VS project
 // Engine_functions.cpp was added to the VS project
-void createConsole() {
+void createConsole() 
+{
     AllocConsole();
     FILE* Dummy;
     freopen_s(&Dummy, "CONOUT$", "w", stdout);
@@ -33,8 +35,14 @@ void MainThread()
     {
         // Main functionality below
 
-    } while (!Callback::Present::uninject);// While uninject is false run the main loop(although I dont nececarly have to bc hooking functions does the job itself
-
+    } while (!Globals::g_uninject);// While uninject is false run the main loop(although I dont nececarly have to bc hooking functions does the job itself
+    
+    //!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
+    fclose(stdout);
+    fclose(stdin);
+    fclose(stderr);
+    FreeConsole();
+    FreeLibraryAndExitThread(Globals::g_hModule, 0);
     // Make sure program is fully shutdown before returning
     std::cout << "uninjected\n";
 }

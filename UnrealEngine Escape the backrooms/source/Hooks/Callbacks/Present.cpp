@@ -2,11 +2,11 @@
 #include <Windows.h>
 #include "../../gui/gui.h"
 #include "../dx11Hook.h"
-
+#include "../../globals.h"
 
 HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
-	if (!uninject) 
+	if (!Globals::g_uninject) 
 	{
 		if (!Gui::is_setup)
 		{
@@ -36,19 +36,15 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 				return oPresent(pSwapChain, SyncInterval, Flags);
 			}
 		}
-
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-
 		if (Gui::is_active) 
 		{
 			Gui::renderCustomCursor();
 			Gui::renderMainMenu();
 		}
-
 		ImGui::Render();
-
 		Gui::DX11Resources::pContext->OMSetRenderTargets(1, &Gui::DX11Resources::pRenderTargetView, nullptr);
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}

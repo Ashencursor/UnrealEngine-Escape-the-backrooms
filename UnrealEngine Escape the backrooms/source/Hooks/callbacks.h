@@ -15,7 +15,6 @@ namespace Callback
 	namespace Present {
 		typedef HRESULT(__stdcall* Present_t)(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 		
-		inline bool uninject = false;
 		inline Present_t oPresent = nullptr;
 		HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags);
 	}

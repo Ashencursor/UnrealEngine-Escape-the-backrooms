@@ -19,6 +19,7 @@ namespace Gui
 
 		inline void** swapChainVFT = nullptr;
 	}
+	inline bool shutdown = false;
 	inline bool is_setup = false;
 	inline bool is_active = false;
 	inline int tab = 0;

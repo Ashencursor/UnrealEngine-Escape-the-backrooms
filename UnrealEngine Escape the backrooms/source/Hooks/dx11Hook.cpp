@@ -10,7 +10,8 @@
 // Hook rendering stuff
 bool Hooks::DX11Hook::initialize()
 {
-	if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success) {
+	if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success) 
+	{
 		std::cerr << "[-] Failed to initialize Kiero!" << std::endl;
 		return false;
 	}
@@ -26,20 +27,14 @@ bool Hooks::DX11Hook::initialize()
 	return true;
 }
 
-void Hooks::DX11Hook::shutdown() {
+void Hooks::DX11Hook::shutdown() 
+{
 	if (!SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}
 	// Destroy ImGui
-	Gui::is_active = false;
 	Gui::destoryImGui();
-	Gui::is_setup = false;
 	// UnHook
 	kiero::shutdown();
-	//!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
-	fclose(stdout);
-	fclose(stdin);
-	fclose(stderr);
-	FreeConsole();
-	FreeLibraryAndExitThread(Globals::g_hModule, 0);
+	Gui::is_setup = false;
 }

@@ -58,7 +58,8 @@ void menuExploitsTab()
 	else Config::fov_value = 90.0f;
 
 }
-void Gui::renderMainMenu() {
+void Gui::renderMainMenu() 
+{
 	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
 	menuTabBar();
 	switch (Gui::tab) 
