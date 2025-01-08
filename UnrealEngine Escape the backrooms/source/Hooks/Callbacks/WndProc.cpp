@@ -1,7 +1,9 @@
 #include "../callbacks.h"
 #include "../../gui/gui.h"
 #include "../../globals.h"
+
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+extern void dllunload();
 
 LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -23,7 +25,7 @@ LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		}
 		if (uMsg == WM_KEYUP && wParam == VK_DELETE)
 		{
-			Globals::g_uninject = !Globals::g_uninject;
+			CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)dllunload, nullptr, 0, nullptr);
 		}
 		// If menu is open we stop game from getting input
 		if (Gui::is_active) 

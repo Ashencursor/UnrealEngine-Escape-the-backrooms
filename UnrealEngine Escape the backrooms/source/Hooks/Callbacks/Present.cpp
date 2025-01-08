@@ -6,7 +6,7 @@
 
 HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
-	if (!Globals::g_uninject) 
+	if (!Gui::shutdown)
 	{
 		if (!Gui::is_setup)
 		{
@@ -24,9 +24,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 				Gui::DX11Resources::pDevice->CreateRenderTargetView(pBackBuffer, NULL, &Gui::DX11Resources::pRenderTargetView);
 				pBackBuffer->Release();
 
-				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(+[](HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)->LRESULT {
-					return Callback::WndProc::hkWndProc(hWnd, uMsg, wParam, lParam);
-					})));
+				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc)));
 
 				Gui::initImGui();
 				Gui::is_setup = true;
@@ -50,7 +48,10 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 	}
 	else 
 	{
+		Gui::destoryImGui();
+
 		Hooks::DX11Hook::getInstance().shutdown();
+		return 0;
 	}
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }

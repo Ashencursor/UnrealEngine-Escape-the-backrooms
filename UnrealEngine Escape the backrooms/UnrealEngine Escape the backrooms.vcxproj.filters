@@ -33,7 +33,7 @@
     <ClCompile Include="source\dependencies\minhook\trampoline.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Main.cpp">
+    <ClCompile Include="source\dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\dependencies\imgui\imgui.cpp">
@@ -1144,6 +1144,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Hooks\dx11Hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="source\dllunload.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,29 +12,30 @@ bool Hooks::DX11Hook::initialize()
 {
 	if (kiero::init(kiero::RenderType::D3D11) != kiero::Status::Success) 
 	{
-		std::cerr << "[-] Failed to initialize Kiero!" << std::endl;
+		std::cout << "[-] Failed to initialize Kiero!" << std::endl;
 		return false;
 	}
 
 	// Hook Present and ResizeBuffers
-	kiero::bind(8, reinterpret_cast<void**>(&Callback::Present::oPresent), +[](IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags) {
-		return Callback::Present::hkPresent(pSwapChain, SyncInterval, Flags);
-		});				// Index 8 is Present
-	kiero::bind(13, reinterpret_cast<void**>(&Callback::ResizeBuffers::oResizeBuffers), +[](IDXGISwapChain* swapChain, UINT count, UINT width, UINT height, DXGI_FORMAT format, UINT flags) -> HRESULT {
-		return Callback::ResizeBuffers::hkResizeBuffers(swapChain, count, width, height, format, flags);
-		});				// Index 13 is ResizeBuffers
+	kiero::bind(8, reinterpret_cast<void**>(&Callback::Present::oPresent), Callback::Present::hkPresent);// Index 8 is Present
+	kiero::bind(13, reinterpret_cast<void**>(&Callback::ResizeBuffers::oResizeBuffers), Callback::ResizeBuffers::hkResizeBuffers);				// Index 13 is ResizeBuffers
 
 	return true;
 }
 
 void Hooks::DX11Hook::shutdown() 
 {
+	std::cout << "[...] DX11Hook::shutdown(), Shutting down cheat\n";
+
+	// UnHook
+	kiero::shutdown();
 	if (!SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}
-	// Destroy ImGui
-	Gui::destoryImGui();
-	// UnHook
-	kiero::shutdown();
-	Gui::is_setup = false;
+	else
+	{
+		std::cout << "[+] Sucsessfully to set original wndproc\n";
+	}
+
+	Gui::shutdown = false;
 }

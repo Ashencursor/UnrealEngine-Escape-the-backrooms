@@ -1,0 +1,23 @@
+#include "gui/gui.h"
+#include "globals.h"
+#include <cstdio>
+
+
+void dllunload()
+{
+	Gui::shutdown = true;
+
+	while (Gui::shutdown)
+	{
+		Sleep(10);
+	}
+
+	Sleep(1000);
+
+
+	//!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
+	fclose(stdout);
+	fclose(stdin);
+	FreeConsole();
+	FreeLibraryAndExitThread(Globals::g_hModule, 0);
+}

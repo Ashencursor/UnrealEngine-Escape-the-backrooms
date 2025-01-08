@@ -502,12 +502,13 @@
     <ClCompile Include="source\dependencies\minhook\hde\hde64.c" />
     <ClCompile Include="source\dependencies\minhook\hook.c" />
     <ClCompile Include="source\dependencies\minhook\trampoline.c" />
+    <ClCompile Include="source\dllunload.cpp" />
     <ClCompile Include="source\gui\gui.cpp" />
     <ClCompile Include="source\Hooks\Callbacks\Present.cpp" />
     <ClCompile Include="source\Hooks\Callbacks\ResizeBuffers.cpp" />
     <ClCompile Include="source\Hooks\Callbacks\WndProc.cpp" />
     <ClCompile Include="source\Hooks\dx11Hook.cpp" />
-    <ClCompile Include="source\Main.cpp" />
+    <ClCompile Include="source\dllmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\dependencies\CppSDK\PropertyFixup.hpp" />
