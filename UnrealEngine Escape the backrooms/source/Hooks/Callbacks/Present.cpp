@@ -3,6 +3,7 @@
 #include "../../gui/gui.h"
 #include "../dx11Hook.h"
 #include "../../globals.h"
+#include <iostream>
 
 HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
@@ -24,7 +25,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 				Gui::DX11Resources::pDevice->CreateRenderTargetView(pBackBuffer, NULL, &Gui::DX11Resources::pRenderTargetView);
 				pBackBuffer->Release();
 
-				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc)));
+				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(Callback::WndProc::hkWndProc)));
 
 				Gui::initImGui();
 				Gui::is_setup = true;
@@ -51,6 +52,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		Gui::destoryImGui();
 
 		Hooks::DX11Hook::getInstance().shutdown();
+		std::cout << "[...] Execution at hkPresent\n";
 		return 0;
 	}
 	return oPresent(pSwapChain, SyncInterval, Flags);

@@ -19,7 +19,6 @@ void Gui::destoryImGui()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
-	is_setup = false;
 }
 
 

@@ -17,7 +17,7 @@ bool Hooks::DX11Hook::initialize()
 	}
 
 	// Hook Present and ResizeBuffers
-	kiero::bind(8, reinterpret_cast<void**>(&Callback::Present::oPresent), Callback::Present::hkPresent);// Index 8 is Present
+	kiero::bind(8, reinterpret_cast<void**>(&Callback::Present::oPresent), Callback::Present::hkPresent);				// Index 8 is Present
 	kiero::bind(13, reinterpret_cast<void**>(&Callback::ResizeBuffers::oResizeBuffers), Callback::ResizeBuffers::hkResizeBuffers);				// Index 13 is ResizeBuffers
 
 	return true;
@@ -29,13 +29,13 @@ void Hooks::DX11Hook::shutdown()
 
 	// UnHook
 	kiero::shutdown();
-	if (!SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
+	if (!SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}
 	else
 	{
 		std::cout << "[+] Sucsessfully to set original wndproc\n";
 	}
-
+	Gui::is_setup = false;
 	Gui::shutdown = false;
 }

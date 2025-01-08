@@ -1,6 +1,7 @@
 #include "gui/gui.h"
 #include "globals.h"
 #include <cstdio>
+#include <iostream>
 
 
 void dllunload()
@@ -12,8 +13,9 @@ void dllunload()
 		Sleep(10);
 	}
 
-	Sleep(1000);
 
+	std::cout << "[...] Execution at dllunload()\n";
+	Sleep(1000);
 
 	//!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
 	fclose(stdout);
