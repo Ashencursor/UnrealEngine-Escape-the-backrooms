@@ -14,7 +14,7 @@ void createConsole() {
     freopen_s(&Dummy, "CONOUT$", "w", stdout);
     freopen_s(&Dummy, "CONIN$", "r", stdin);
 }
-void MainThread(HMODULE hModule)
+void MainThread()
 {
     createConsole();
 
@@ -35,13 +35,6 @@ void MainThread(HMODULE hModule)
 
     } while (!Callback::Present::uninject);// While uninject is false run the main loop(although I dont nececarly have to bc hooking functions does the job itself
 
-    //!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
-    fclose(stdout);
-    fclose(stdin);
-    fclose(stderr);
-    FreeConsole();
-    FreeLibraryAndExitThread(hModule, 0);
-
     // Make sure program is fully shutdown before returning
     std::cout << "uninjected\n";
 }
@@ -51,7 +44,7 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved)
     switch (reason)
     {
     case DLL_PROCESS_ATTACH:
-        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)MainThread, hModule, 0, nullptr);
+        CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)MainThread, nullptr, 0, nullptr);
         break;
     }
     

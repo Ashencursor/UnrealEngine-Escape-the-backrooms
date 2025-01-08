@@ -1533,6 +1533,7 @@
     <ClInclude Include="source\dependencies\minhook\hde\table64.h" />
     <ClInclude Include="source\dependencies\minhook\include\MinHook.h" />
     <ClInclude Include="source\dependencies\minhook\trampoline.h" />
+    <ClInclude Include="source\globals.h" />
     <ClInclude Include="source\gui\gui.h" />
     <ClInclude Include="source\config\config.h" />
     <ClInclude Include="source\Hooks\callbacks.h" />

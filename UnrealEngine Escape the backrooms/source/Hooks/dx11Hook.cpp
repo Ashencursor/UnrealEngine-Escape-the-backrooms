@@ -5,6 +5,7 @@
 #include "../dependencies/imgui/imgui_impl_dx11.h"
 #include "../dependencies/imgui/imgui_impl_win32.h"
 #include "../gui/gui.h"
+#include "../globals.h"
 
 // Hook rendering stuff
 bool Hooks::DX11Hook::initialize()
@@ -29,10 +30,16 @@ void Hooks::DX11Hook::shutdown() {
 	if (!SetWindowLongPtr(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}
-
+	// Destroy ImGui
+	Gui::is_active = false;
 	Gui::destoryImGui();
 	Gui::is_setup = false;
-	Gui::is_active = false;
+	// UnHook
 	kiero::shutdown();
-	Callback::Present::uninject = true;
+	//!!!!!!!!!!!!!!! LOOK INTO WHY THE CODE BELOW STOPED ERRORS WHEN CLOSING THE GAME AND PRESSING DELETE TO UNINJECT
+	fclose(stdout);
+	fclose(stdin);
+	fclose(stderr);
+	FreeConsole();
+	FreeLibraryAndExitThread(Globals::g_hModule, 0);
 }

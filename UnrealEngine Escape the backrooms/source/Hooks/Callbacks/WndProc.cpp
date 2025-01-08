@@ -1,11 +1,12 @@
 #include "../callbacks.h"
 #include "../../gui/gui.h"
-
+#include "../../globals.h"
 extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	if (Gui::is_setup) {
+	if (Gui::is_setup) 
+	{
 		/*The function below only works if ImGui is active and rendering, so ImGui::Begin/end*/
 		// Pass the message to ImGui's handler first
 		ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
@@ -22,10 +23,11 @@ LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		}
 		if (uMsg == WM_KEYUP && wParam == VK_DELETE)
 		{
-			Callback::Present::uninject = !Callback::Present::uninject;
+			Globals::g_uninject = !Globals::g_uninject;
 		}
 		// If menu is open we stop game from getting input
-		if (Gui::is_active) {
+		if (Gui::is_active) 
+		{
 			return true;
 		}
 	}

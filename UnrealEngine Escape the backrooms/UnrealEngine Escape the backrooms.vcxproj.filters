@@ -4229,6 +4229,9 @@
     <ClInclude Include="source\Hooks\dx11Hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="source\dependencies\CppSDK\NameCollisions.inl">
