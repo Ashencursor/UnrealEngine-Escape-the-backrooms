@@ -506,6 +506,7 @@
     <ClCompile Include="source\Hooks\Callbacks\Present.cpp" />
     <ClCompile Include="source\Hooks\Callbacks\ResizeBuffers.cpp" />
     <ClCompile Include="source\Hooks\Callbacks\WndProc.cpp" />
+    <ClCompile Include="source\Hooks\dx11Hook.cpp" />
     <ClCompile Include="source\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -1536,6 +1537,7 @@
     <ClInclude Include="source\gui\gui.h" />
     <ClInclude Include="source\config\config.h" />
     <ClInclude Include="source\Hooks\callbacks.h" />
+    <ClInclude Include="source\Hooks\dx11Hook.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source\dependencies\CppSDK\NameCollisions.inl" />

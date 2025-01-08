@@ -4,6 +4,7 @@
 #include "gui/gui.h"
 #include "dependencies/CppSDK/SDK/Engine_classes.hpp"
 #include "config/config.h"
+#include "Hooks/dx11Hook.h"
 
 // Basic.cpp was added to the VS project
 // Engine_functions.cpp was added to the VS project
@@ -18,7 +19,7 @@ DWORD MainThread(HMODULE Module)
     createConsole();
 
     // Setup Hooks
-    Gui::D3D11Hook& DirectXHook = Gui::D3D11Hook::getInstance();
+    Hooks::DX11Hook& DirectXHook = Hooks::DX11Hook::getInstance();
     DirectXHook.initialize();
 
     // UE info
@@ -41,7 +42,7 @@ DWORD MainThread(HMODULE Module)
     // Make sure program is fully shutdown before returning
     bool finished = false;
     do {
-        Gui::D3D11Hook::getInstance().shutdown();
+        Hooks::DX11Hook::getInstance().shutdown();
     } while (!finished);
 
     return 0;
@@ -55,6 +56,6 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved)
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)MainThread, hModule, 0, nullptr);
         break;
     }
-
+    
     return TRUE;
 }

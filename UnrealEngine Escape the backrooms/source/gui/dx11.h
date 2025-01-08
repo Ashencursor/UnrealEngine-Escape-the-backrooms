@@ -4,7 +4,7 @@
 
 
 // Will get d3d11 information which will be used by gui.h and d3d11hook
-namespace D3D11Resources
+namespace DX11Resources
 {
 	inline HWND hwnd;
 	inline ID3D11Device* pDevice;

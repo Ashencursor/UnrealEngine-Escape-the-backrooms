@@ -1143,6 +1143,9 @@
     <ClCompile Include="source\Hooks\Callbacks\ResizeBuffers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\Hooks\dx11Hook.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\dependencies\kiero\kiero.h">
@@ -4224,6 +4227,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\gui\dx11.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Hooks\dx11Hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

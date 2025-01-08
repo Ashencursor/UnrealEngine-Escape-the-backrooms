@@ -8,13 +8,9 @@ LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wPar
 	if (Gui::is_active) {
 		if (true && ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))
 			return true;
-		// Can stop the in game mouse from moving
-		if (uMsg == WM_MOUSEMOVE || uMsg == WM_LBUTTONDOWN || uMsg == WM_RBUTTONDOWN) {
-			// Let ImGui handle the mouse input instead of the game
-			return 0; // Return 0 to stop the game from handling the input
-		}
 	}
 
+	
 	switch (uMsg)
 	{
 	case WM_KEYUP:
