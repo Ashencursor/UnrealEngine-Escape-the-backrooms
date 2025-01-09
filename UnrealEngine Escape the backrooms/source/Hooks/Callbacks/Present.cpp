@@ -50,9 +50,8 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 	else 
 	{
 		Gui::destoryImGui();
-
 		Hooks::DX11Hook::getInstance().shutdown();
-		std::cout << "[...] Execution at hkPresent\n";
+		std::cout << "[...] Execution in hkPresent()\n";
 		return 0;
 	}
 	return oPresent(pSwapChain, SyncInterval, Flags);

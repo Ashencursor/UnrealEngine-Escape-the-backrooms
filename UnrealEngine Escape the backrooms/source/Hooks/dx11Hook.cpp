@@ -27,6 +27,22 @@ void Hooks::DX11Hook::shutdown()
 {
 	std::cout << "[...] DX11Hook::shutdown(), Shutting down cheat\n";
 
+	if (Gui::DX11Resources::pRenderTargetView)
+	{
+		Gui::DX11Resources::pRenderTargetView->Release();
+		Gui::DX11Resources::pRenderTargetView = nullptr;
+	}
+	if (Gui::DX11Resources::pContext)
+	{
+		Gui::DX11Resources::pContext->Release();
+		Gui::DX11Resources::pContext = nullptr;
+	}
+	if (Gui::DX11Resources::pDevice)
+	{
+		Gui::DX11Resources::pDevice->Release();
+		Gui::DX11Resources::pDevice = nullptr;
+	}
+
 	// UnHook
 	kiero::shutdown();
 	if (!SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(Callback::WndProc::oWndProc))) {

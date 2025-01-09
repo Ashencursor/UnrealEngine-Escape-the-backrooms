@@ -7,14 +7,12 @@
 #include "Hooks/dx11Hook.h"
 #include "globals.h"
 
-// Basic.cpp was added to the VS project
-// Engine_functions.cpp was added to the VS project
+
 void createConsole() 
 {
     AllocConsole();
-    FILE* Dummy;
-    freopen_s(&Dummy, "CONOUT$", "w", stdout);
-    freopen_s(&Dummy, "CONIN$", "r", stdin);
+    freopen_s((FILE**)stdout, "CONOUT$", "w", stdout);
+    freopen_s((FILE**)stdin, "CONIN$", "r", stdin);
 }
 void MainThread()
 {
