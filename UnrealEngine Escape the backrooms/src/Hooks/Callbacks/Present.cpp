@@ -25,7 +25,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 				Gui::DX11Resources::pDevice->CreateRenderTargetView(pBackBuffer, NULL, &Gui::DX11Resources::pRenderTargetView);
 				pBackBuffer->Release();
 
-				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(Callback::WndProc::hkWndProc)));
+				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::hkWndProc)));
 
 				Gui::initImGui();
 				Gui::is_setup = true;
@@ -50,9 +50,11 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 	else 
 	{
 		Gui::destoryImGui();
+		/*	
+		When I dont use kiero at some point I'll change this to only unhook from hkPresent, preventing any further calls
+		to this else statement. At that point its expected to have my own functions kiero impliments but they will be more modular.
+		*/
 		Hooks::DX11Hook::getInstance().shutdown();
-		std::cout << "[...] Execution in hkPresent()\n";
-		return 0;
 	}
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }

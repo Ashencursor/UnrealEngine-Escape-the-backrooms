@@ -25,7 +25,7 @@ LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		}
 		if (uMsg == WM_KEYUP && wParam == VK_DELETE)
 		{
-			CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)dllunload, nullptr, 0, nullptr);
+			Gui::shutdown = true;
 		}
 		// If menu is open we stop game from getting input
 		if (Gui::is_active) 

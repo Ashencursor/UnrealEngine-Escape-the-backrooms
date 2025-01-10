@@ -1146,9 +1146,6 @@
     <ClCompile Include="src\Hooks\dx11Hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\dllunload.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dependencies\kiero\kiero.h">

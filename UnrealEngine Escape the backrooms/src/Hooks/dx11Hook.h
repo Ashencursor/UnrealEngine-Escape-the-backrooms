@@ -9,7 +9,7 @@ namespace Hooks
 	private:
 		// Special members, private to prevent instantiation 
 		DX11Hook() = default;
-		~DX11Hook() { shutdown(); }
+		//~DX11Hook() = default;
 
 		// Delete so nobody can create another instance of the class
 		DX11Hook(const DX11Hook&) = delete;

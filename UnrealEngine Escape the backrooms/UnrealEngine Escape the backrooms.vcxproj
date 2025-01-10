@@ -502,7 +502,6 @@
     <ClCompile Include="src\dependencies\minhook\hde\hde64.c" />
     <ClCompile Include="src\dependencies\minhook\hook.c" />
     <ClCompile Include="src\dependencies\minhook\trampoline.c" />
-    <ClCompile Include="src\dllunload.cpp" />
     <ClCompile Include="src\gui\gui.cpp" />
     <ClCompile Include="src\Hooks\Callbacks\Present.cpp" />
     <ClCompile Include="src\Hooks\Callbacks\ResizeBuffers.cpp" />

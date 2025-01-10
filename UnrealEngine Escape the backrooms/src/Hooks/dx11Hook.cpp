@@ -26,7 +26,7 @@ bool Hooks::DX11Hook::initialize()
 void Hooks::DX11Hook::shutdown() 
 {
 	std::cout << "[...] DX11Hook::shutdown(), Shutting down cheat\n";
-
+	// Destroy dx11 resources
 	if (Gui::DX11Resources::pRenderTargetView)
 	{
 		Gui::DX11Resources::pRenderTargetView->Release();
@@ -42,10 +42,9 @@ void Hooks::DX11Hook::shutdown()
 		Gui::DX11Resources::pDevice->Release();
 		Gui::DX11Resources::pDevice = nullptr;
 	}
-
 	// UnHook
 	kiero::shutdown();
-	if (!SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(Callback::WndProc::oWndProc))) {
+	if (!SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}
 	else

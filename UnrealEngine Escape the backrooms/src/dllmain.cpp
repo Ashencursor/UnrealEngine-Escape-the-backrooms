@@ -21,6 +21,17 @@ void MainThread()
     // Setup Hooks
     Hooks::DX11Hook& DirectXHook = Hooks::DX11Hook::getInstance();
     DirectXHook.initialize();
+
+    // Main loop
+    while (!Gui::shutdown) {
+        Sleep(10);
+    }
+    Sleep(1000);// Let hkPresent finish up before terminating this all.
+
+    fclose(stdout);
+    fclose(stdin);
+    FreeConsole();
+    FreeLibraryAndExitThread(Globals::g_hModule, 0);
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved)
@@ -31,6 +42,8 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD reason, LPVOID lpReserved)
     {
     case DLL_PROCESS_ATTACH:
         CreateThread(nullptr, 0, (LPTHREAD_START_ROUTINE)MainThread, nullptr, 0, nullptr);
+        break;
+    case DLL_PROCESS_DETACH:
         break;
     }
     return TRUE;
