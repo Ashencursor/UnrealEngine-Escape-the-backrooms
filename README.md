@@ -17,7 +17,7 @@
   -> If dll not unloaded, and game closes then it will not cause that error to show up after the  game is closed. ALthough the issue resides inside the shutdown() function its most likley when SetWindowLongPtrA() is called, because the game window might be closed and try to access its hwnd. Notice that hwnd is also never set to nullptr when releasing the dx11resoures.
 
 # Dependencies used
-~~- [X] Kiero~~
+- ~~[X] Kiero~~
 - [X] MinHook
 - [X] Dumper-7
 - [X] ImGui
