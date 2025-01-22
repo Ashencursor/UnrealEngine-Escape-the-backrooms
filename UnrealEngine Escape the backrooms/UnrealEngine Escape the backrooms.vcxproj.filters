@@ -1149,6 +1149,9 @@
     <ClCompile Include="src\Hooks\hooks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cheats\Cheat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dependencies\kiero\kiero.h">
@@ -4239,6 +4242,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Hooks\hooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cheats\game\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cheats\game\Items\item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cheats\Cheat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

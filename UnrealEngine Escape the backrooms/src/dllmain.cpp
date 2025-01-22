@@ -6,7 +6,7 @@
 #include "config/config.h"
 #include "Hooks/dx11Hook.h"
 #include "globals.h"
-
+#include "cheats/Cheat.h"
 
 void createConsole() 
 {

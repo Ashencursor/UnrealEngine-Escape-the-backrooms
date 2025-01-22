@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\cheats\Cheat.cpp" />
     <ClCompile Include="src\dependencies\CppSDK\SDK\ActorLayerUtilities_functions.cpp" />
     <ClCompile Include="src\dependencies\CppSDK\SDK\AC_Swimming_functions.cpp" />
     <ClCompile Include="src\dependencies\CppSDK\SDK\AdvancedSessions_functions.cpp" />
@@ -515,6 +516,9 @@
     <ClCompile Include="src\Hooks\hooks.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cheats\Cheat.h" />
+    <ClInclude Include="src\cheats\game\game.h" />
+    <ClInclude Include="src\cheats\game\Items\item.h" />
     <ClInclude Include="src\defines.h" />
     <ClInclude Include="src\dependencies\CppSDK\PropertyFixup.hpp" />
     <ClInclude Include="src\dependencies\CppSDK\SDK.hpp" />
