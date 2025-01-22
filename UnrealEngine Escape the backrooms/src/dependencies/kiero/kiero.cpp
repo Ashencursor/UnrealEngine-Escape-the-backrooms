@@ -43,7 +43,7 @@
 #define KIERO_ARRAY_SIZE(arr) ((size_t)(sizeof(arr)/sizeof(arr[0])))
 
 static kiero::RenderType::Enum g_renderType = kiero::RenderType::None;
-static uint150_t* g_methodsTable = NULL;
+//inline uint150_t* g_methodsTable = NULL;// CHILLMAN CHANGE TO H FILE
 
 kiero::Status::Enum kiero::init(RenderType::Enum _renderType)
 {

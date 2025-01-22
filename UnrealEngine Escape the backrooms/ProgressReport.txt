@@ -1,0 +1,6 @@
+Where am I in the code
+*this is for when I take a break from programming and forget where I left off*
+
+Currently I am somewhere in the hooking section, trying to impliment my own VFT swap chain getter and my own hook function(that use minhook)
+
+somewhere in the hooking section

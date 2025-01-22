@@ -1146,6 +1146,9 @@
     <ClCompile Include="src\Hooks\dx11Hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Hooks\hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dependencies\kiero\kiero.h">
@@ -4232,10 +4235,17 @@
     <ClInclude Include="src\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\defines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Hooks\hooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\dependencies\CppSDK\NameCollisions.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="ProgressReport.txt" />
   </ItemGroup>
 </Project>

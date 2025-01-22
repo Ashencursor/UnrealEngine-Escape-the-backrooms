@@ -1,8 +1,9 @@
 #include "gui.h"
 #include <d3d11.h>
+#include <dxgi.h>
 #include <iostream>
 #include "../config/config.h"
-
+#include "../defines.h"
 
 
 void Gui::initImGui()
@@ -16,6 +17,9 @@ void Gui::initImGui()
 
 void Gui::destoryImGui()
 {
+#ifdef _DEBUG
+	std::cout << "[...] destoryImGui()\n";
+#endif
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -60,6 +64,9 @@ void menuExploitsTab()
 }
 void Gui::renderMainMenu() 
 {
+#ifdef _DEBUG
+	std::cout << "[...] renderMainMenu()\n";
+#endif
 	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
 	menuTabBar();
 	switch (Gui::tab) 
@@ -92,3 +99,4 @@ void Gui::renderCustomCursor()
 
 	ImGui::GetForegroundDrawList()->AddRectFilled(rectStart, rectEnd, IM_COL32(0, 0, 0, 255)); // Black rectangle
 }
+

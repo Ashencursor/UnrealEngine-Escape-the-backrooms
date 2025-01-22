@@ -29,7 +29,7 @@ typedef uint64_t uint150_t;
 #else
 typedef uint32_t uint150_t;
 #endif
-
+inline uint150_t* g_methodsTable = NULL;
 namespace kiero
 {
 	struct Status

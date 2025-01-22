@@ -13,6 +13,9 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		{
 			if (SUCCEEDED(pSwapChain->GetDevice(__uuidof(ID3D11Device), (void**)&Gui::DX11Resources::pDevice)))
 			{
+#ifdef _DEBUG
+				std::cout << "[...] hkPresent(), initialization\n"; 
+#endif
 				// Initialize DX11 resources
 				Gui::DX11Resources::pDevice->GetImmediateContext(&Gui::DX11Resources::pContext);
 
@@ -22,7 +25,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 
 				ID3D11Texture2D* pBackBuffer;
 				pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&pBackBuffer);
-				Gui::DX11Resources::pDevice->CreateRenderTargetView(pBackBuffer, NULL, &Gui::DX11Resources::pRenderTargetView);
+				Gui::DX11Resources::pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &Gui::DX11Resources::pRenderTargetView);
 				pBackBuffer->Release();
 
 				Callback::WndProc::oWndProc = reinterpret_cast<WNDPROC>(SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::hkWndProc)));
@@ -49,6 +52,10 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 	}
 	else 
 	{
+#ifdef _DEBUG
+		std::cout << "[...] hkPresent(), shutdown\n";
+#endif
+
 		Gui::destoryImGui();
 		/*	
 		When I dont use kiero at some point I'll change this to only unhook from hkPresent, preventing any further calls

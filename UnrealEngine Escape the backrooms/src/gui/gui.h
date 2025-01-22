@@ -16,8 +16,6 @@ namespace Gui
 		inline ID3D11Device* pDevice;
 		inline ID3D11DeviceContext* pContext;
 		inline ID3D11RenderTargetView* pRenderTargetView;
-
-		inline void** swapChainVFT = nullptr;
 	}
 	inline bool shutdown = false;
 	inline bool is_setup = false;
