@@ -60,9 +60,6 @@ bool Hooks::DX11Hook::initialize()
 	swapChainVFT = getSwapChainVFT();
 
 	// Hook Present and ResizeBuffers
-	//kiero::bind(8, reinterpret_cast<void**>(&Callback::Present::oPresent), Callback::Present::hkPresent);				// Index 8 is Present
-	//kiero::bind(13, reinterpret_cast<void**>(&Callback::ResizeBuffers::oResizeBuffers), Callback::ResizeBuffers::hkResizeBuffers);				// Index 13 is ResizeBuffers
-	
 	//Minhook stuff
 	Hooks::initMinhook();
 
