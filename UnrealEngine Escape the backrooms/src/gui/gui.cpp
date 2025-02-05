@@ -42,6 +42,10 @@ void menuTabBar()
 		{
 			Gui::tab = 2;
 		}
+		if (ImGui::TabItemButton("Windows"))
+		{
+			Gui::tab = 3;
+		}
 	}
 	ImGui::EndTabBar();
 }
@@ -62,6 +66,12 @@ void menuExploitsTab()
 	else Config::fov_value = 90.0f;
 
 }
+void menuWindowsTab()
+{
+	ImGui::Checkbox("All Items Window", &Config::items_window);
+	ImGui::Checkbox("Dropped Items Window", &Config::dropped_items_window);
+}
+
 void Gui::renderMainMenu() 
 {
 #ifdef _DEBUG
@@ -79,6 +89,9 @@ void Gui::renderMainMenu()
 		break;
 	case 2:
 		menuExploitsTab();
+		break;
+	case 3:
+		menuWindowsTab();
 		break;
 	default:
 		Gui::tab = 0;
@@ -100,3 +113,21 @@ void Gui::renderCustomCursor()
 	ImGui::GetForegroundDrawList()->AddRectFilled(rectStart, rectEnd, IM_COL32(0, 0, 0, 255)); // Black rectangle
 }
 
+
+// Forward declare functions for Tick() use
+void allDroppedItems();
+void droppedItems();
+
+void Gui::Tick()
+{
+	renderMainMenu();
+	// Update player info and make sure its all valid. 
+	if (Config::dropped_items_window) 
+	{
+		allDroppedItems();
+	}
+	if (Config::items_window)
+	{
+		droppedItems();
+	}
+}

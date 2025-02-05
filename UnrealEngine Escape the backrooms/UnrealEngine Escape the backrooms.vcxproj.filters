@@ -1152,6 +1152,15 @@
     <ClCompile Include="src\cheats\Cheat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cheats\game\item.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\Windows\allDroppedItems.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\Windows\droppedItems.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dependencies\kiero\kiero.h">
@@ -4247,10 +4256,13 @@
     <ClInclude Include="src\cheats\game\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\cheats\game\Items\item.h">
+    <ClInclude Include="src\cheats\game\item.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cheats\Cheat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cheats\game\player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

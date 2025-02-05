@@ -95,6 +95,9 @@ void Hooks::DX11Hook::shutdown()
 	}
 	// UnHook all hooks
 	MH_DisableHook(MH_ALL_HOOKS);
+
+	MH_RemoveHook(MH_ALL_HOOKS);
+
 	if (!SetWindowLongPtrA(Gui::DX11Resources::hwnd, GWLP_WNDPROC, reinterpret_cast<uintptr_t>(Callback::WndProc::oWndProc))) {
 		std::cout << "[-] Failed to set original wndproc\n";
 	}

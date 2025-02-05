@@ -13,15 +13,19 @@ namespace Game
 	struct Item
 	{
 		std::string name;
+		SDK::ADroppedItem* obj;
+
 	};
 	struct DroppedItem
 	{
 		std::string name;
 		SDK::FVector pos;
-		SDK::APawn* Obj;
+		//ScreenPos screen_pos;
+		SDK::ADroppedItem* obj;
 	};
 
+	
 	inline std::vector<Player> players;
-	inline std::vector<Item> items;
+	inline std::vector<Item> all_items;
 	inline std::vector<DroppedItem> dropped_items;
 }

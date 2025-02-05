@@ -23,6 +23,7 @@ namespace Gui
 	inline int tab = 0;
 	inline POINT cursor_pos{};
 
+	void Tick();
 	void initImGui();
 	void destoryImGui();
 	void renderMainMenu();

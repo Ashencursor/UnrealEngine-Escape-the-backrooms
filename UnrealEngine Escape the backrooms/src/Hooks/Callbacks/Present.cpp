@@ -4,6 +4,7 @@
 #include "../dx11Hook.h"
 #include "../../globals.h"
 #include <iostream>
+#include "../../cheats/Cheat.h"
 
 HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags)
 {
@@ -41,10 +42,12 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
+		// Cheat stuff
+		//Cheat::Tick();
+		/*ABOVE THIS CODE IS AN ISSUE WHICH CAUSES A CRASH, MOST LIKELY DUE TO THREADS MIXING UP OR SOMETHING...???*/
 		if (Gui::is_active) 
 		{
-			Gui::renderCustomCursor();
-			Gui::renderMainMenu();
+			Gui::Tick();
 		}
 		ImGui::Render();
 		Gui::DX11Resources::pContext->OMSetRenderTargets(1, &Gui::DX11Resources::pRenderTargetView, nullptr);
