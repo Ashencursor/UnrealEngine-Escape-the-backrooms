@@ -14,7 +14,6 @@ namespace Game
 	{
 		std::string name;
 		SDK::ADroppedItem* obj;
-
 	};
 	struct DroppedItem
 	{
@@ -23,8 +22,12 @@ namespace Game
 		//ScreenPos screen_pos;
 		SDK::ADroppedItem* obj;
 	};
+	SDK::APlayerController* getPC();
+	SDK::APawn* getPawn();
+	SDK::ABPCharacter_Demo_C* getBPPawn();
 
-	
+	inline SDK::ADroppedItem* given_item;
+
 	inline std::vector<Player> players;
 	inline std::vector<Item> all_items;
 	inline std::vector<DroppedItem> dropped_items;

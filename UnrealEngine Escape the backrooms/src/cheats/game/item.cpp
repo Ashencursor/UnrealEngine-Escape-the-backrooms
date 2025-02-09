@@ -18,7 +18,7 @@ std::vector<SDK::ADroppedItem*>& GetAllDefaultDroppedItems()
                 AllDefaultDroppedItems.push_back((SDK::ADroppedItem*)Obj);
             }
         }
-    }
+    }             
 
     return AllDefaultDroppedItems;
 }
@@ -67,24 +67,50 @@ void UpdateAllItemsCache()
     }
 }
 
-void printAllDroppedItems()
-{
-    for (const auto& item : Game::all_items) {
-        std::cout << " [-]Game Items:   " << item.name << '\n';
+
+void logAllActors(SDK::UWorld* World) {
+    if (!World || !World->PersistentLevel) {
+        std::cout << "Invalid World or PersistentLevel" << std::endl;
+        return;
+    }
+
+    auto& Actors = World->PersistentLevel->Actors; // Directly access the Actors array or list
+    std::vector<std::pair<std::string, std::string>> actors;
+
+    for (int i = 0; i < Actors.Num(); ++i) { 
+        SDK::AActor* Actor = Actors[i];     
+        if (Actor) {
+            std::string actorName = Actor->GetName();
+            std::string className = Actor->Class->GetName();
+            actors.push_back({ actorName, className });
+        }
+    }
+
+    for (const auto& pair : actors) {
+        std::cout << "Actor: " << pair.first << ", Class: " << pair.second << std::endl;
     }
 }
-void printDroppedItems() 
-{
-    for (const auto& item : Game::dropped_items) {
-        std::cout << " [+]Dropped Items " << item.name << '\n';
-    }
-}
+
+
+
+
 void Cheat::Items::Tick()
 {
     UpdateDroppedItemsCache();
     UpdateAllItemsCache();
-#ifdef _DEBUG
-    printAllDroppedItems();
-    printDroppedItems();
-#endif
+    logAllActors(SDK::UWorld::GetWorld());
+    if (Game::given_item) {
+        SDK::ABPCharacter_Demo_C* BPPawn = Game::getBPPawn();
+        if (BPPawn) {
+            if (Game::given_item->IsDefaultObject()) {
+                // Handle as default object, using ID or sm
+                BPPawn->InvAddByName(Game::given_item->ID);
+            }
+            else {
+                // Handle as fully initialized custom object
+                BPPawn->InvAdd(Game::given_item);
+            }
+        }
+        Game::given_item = nullptr;
+    }
 }

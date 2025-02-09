@@ -42,13 +42,16 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
-		// Cheat stuff
-		//Cheat::Tick();
-		/*ABOVE THIS CODE IS AN ISSUE WHICH CAUSES A CRASH, MOST LIKELY DUE TO THREADS MIXING UP OR SOMETHING...???*/
+		
 		if (Gui::is_active) 
 		{
 			Gui::Tick();
 		}
+
+		// Cheat stuff
+		Cheat::Tick();
+		/*ABOVE THIS CODE IS AN ISSUE WHICH CAUSES A CRASH, MOST LIKELY DUE TO THREADS MIXING UP OR SOMETHING...???*/
+
 		ImGui::Render();
 		Gui::DX11Resources::pContext->OMSetRenderTargets(1, &Gui::DX11Resources::pRenderTargetView, nullptr);
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

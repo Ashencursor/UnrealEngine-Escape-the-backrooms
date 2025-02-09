@@ -4,6 +4,8 @@
 #include <iostream>
 #include "../config/config.h"
 #include "../defines.h"
+#include "../dependencies/CppSDK/SDK/Engine_parameters.hpp"
+#include "../cheats/game/game.h"
 
 
 void Gui::initImGui()
@@ -20,6 +22,7 @@ void Gui::destoryImGui()
 #ifdef _DEBUG
 	std::cout << "[...] destoryImGui()\n";
 #endif
+
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -57,13 +60,59 @@ void menuVisualsTab()
 {
 
 }
+// FIC AND ORGINIZE THIS SHIT
 void menuExploitsTab()
 {
+	SDK::APlayerController* PC = Game::getPC();
+	auto* MovementComponent = PC->Character->CharacterMovement;
 	// FOV
 	ImGui::Checkbox("Fov Changer", &Config::fov_changer);
-	if (Config::fov_changer)
+	if (Config::fov_changer) {
 		ImGui::SliderFloat("Fov Value", &Config::fov_value, 0.0f, 180.0f);
+		PC->FOV(Config::fov_value);
+	}
 	else Config::fov_value = 90.0f;
+
+	// SpeedHack
+	ImGui::Checkbox("Speed Hack(walking only)", &Config::speed_hack);
+	if (Config::speed_hack)
+	{
+		ImGui::SliderFloat("Walk Speed Value", &Config::walk_speed, 0.0f, 10000.0f);
+		if (MovementComponent)
+		{
+			MovementComponent->MaxWalkSpeed = Config::walk_speed;
+		}
+	}
+	// FLYING
+	/*ImGui::Checkbox("Fly Hack", &Config::fly);
+	if (Config::fly)
+	{
+		ImGui::SliderFloat("Fly Speed Value", &Config::fly_speed, 0.0f, 10000.0f);
+		if (MovementComponent)
+		{
+			MovementComponent->MaxFlySpeed = Config::fly_speed;
+			MovementComponent->SetMovementMode(SDK::EMovementMode::MOVE_Flying, 0);
+		}
+	}
+	else
+	{
+		//MovementComponent->SetMovementMode(SDK::EMovementMode::MOVE_Walking, 0);
+	}
+	//Gravity
+	ImGui::Checkbox("Gravity Scale", &Config::gravity);
+	if (Config::gravity)
+	{
+		ImGui::SliderFloat("Gravity Scale Value(.17 recommended)", &Config::gravity_pull, 0.0f, 1.0f);
+		if (MovementComponent)
+		{
+			MovementComponent->GravityScale = Config::gravity_pull;
+		}
+	}
+	else
+	{
+		Config::gravity_pull = 1.0f;
+	}
+	*/
 
 }
 void menuWindowsTab()
@@ -78,6 +127,7 @@ void Gui::renderMainMenu()
 	std::cout << "[...] renderMainMenu()\n";
 #endif
 	ImGui::Begin("UnrealEngine ETB Cheat(F9 to close menu, DELETE to exit)");
+	renderCustomCursor();
 	menuTabBar();
 	switch (Gui::tab) 
 	{
@@ -122,11 +172,11 @@ void Gui::Tick()
 {
 	renderMainMenu();
 	// Update player info and make sure its all valid. 
-	if (Config::dropped_items_window) 
+	if (Config::items_window)
 	{
 		allDroppedItems();
 	}
-	if (Config::items_window)
+	if (Config::dropped_items_window)
 	{
 		droppedItems();
 	}

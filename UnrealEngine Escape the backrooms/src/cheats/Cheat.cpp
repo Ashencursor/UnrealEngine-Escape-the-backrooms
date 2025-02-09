@@ -16,6 +16,7 @@ bool shouldTick()
 
     return true;
 }
+
 //Main tick() that calls other tick()s
 void Cheat::Tick()
 {

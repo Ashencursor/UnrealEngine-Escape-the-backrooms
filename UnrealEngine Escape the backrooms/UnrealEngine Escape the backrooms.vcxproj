@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\cheats\Cheat.cpp" />
+    <ClCompile Include="src\cheats\game\game.cpp" />
     <ClCompile Include="src\cheats\game\item.cpp" />
     <ClCompile Include="src\dependencies\CppSDK\SDK\ActorLayerUtilities_functions.cpp" />
     <ClCompile Include="src\dependencies\CppSDK\SDK\AC_Swimming_functions.cpp" />

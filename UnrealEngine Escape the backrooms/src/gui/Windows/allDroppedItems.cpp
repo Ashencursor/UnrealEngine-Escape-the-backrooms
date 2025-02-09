@@ -4,7 +4,7 @@
 
 void allDroppedItems() 
 {
-	ImGui::Begin("All Dropped Items");
+	ImGui::Begin("All Items");
 
     if (ImGui::BeginTable("Table", 2, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
         // Set up table headers
@@ -14,6 +14,7 @@ void allDroppedItems()
 
         for (size_t i = 0; i < Game::all_items.size(); ++i) {
             ImGui::TableNextRow();
+            ImGui::PushID(Game::all_items[i].obj);
 
             // Column 1: Name
             ImGui::TableSetColumnIndex(0);
@@ -24,7 +25,9 @@ void allDroppedItems()
             if (ImGui::Button("Give Item"))
             {
                 // Custom Logic
+                Game::given_item = Game::all_items[i].obj;
             }
+            ImGui::PopID();
         }
 
         ImGui::EndTable();

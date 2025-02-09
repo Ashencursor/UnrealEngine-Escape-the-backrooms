@@ -1161,6 +1161,9 @@
     <ClCompile Include="src\gui\Windows\droppedItems.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cheats\game\game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\dependencies\kiero\kiero.h">
