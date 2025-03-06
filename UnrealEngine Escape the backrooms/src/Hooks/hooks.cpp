@@ -10,7 +10,9 @@ void Hooks::initMinhook()
 bool Hooks::hook(void* target, void* detour, void** original)
 {
 	if (MH_CreateHook(target, detour, original) != MH_OK ) {
+#ifdef _DEBUG
 		std::cout << "Failed to create hook\n";
+#endif
 		return false;
 	}
 	return true;
@@ -19,7 +21,9 @@ bool Hooks::hook(void* target, void* detour, void** original)
 bool Hooks::enable(void* target)
 {
 	if (MH_EnableHook(target) != MH_OK) {
+#ifdef _DEBUG
 		std::cout << "Failed to enable hook\n";
+#endif
 		return false;
 	}
 	return true;
@@ -28,7 +32,9 @@ bool Hooks::enable(void* target)
 bool Hooks::disable(void* target)
 {
 	if (MH_DisableHook(target) != MH_OK) {
+#ifdef _DEBUG
 		std::cout << "Failed to disable hook\n";
+#endif
 		return false;
 	}
 	return true;

@@ -26,3 +26,8 @@ SDK::ABPCharacter_Demo_C* Game::getBPPawn()
     }
     return reinterpret_cast<SDK::ABPCharacter_Demo_C*>(pawn);
 }
+
+bool Game::W2S(SDK::FVector world_pos, SDK::FVector2D& screen_pos)
+{
+    return getPC()->ProjectWorldLocationToScreen(world_pos, &screen_pos, false);
+}

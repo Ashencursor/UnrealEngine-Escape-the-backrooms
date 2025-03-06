@@ -43,15 +43,13 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 		
-		if (Gui::is_active) 
-		{
-			Gui::Tick();
-		}
-
 		// Cheat stuff
 		Cheat::Tick();
 		/*ABOVE THIS CODE IS AN ISSUE WHICH CAUSES A CRASH, MOST LIKELY DUE TO THREADS MIXING UP OR SOMETHING...???*/
-
+		if (Gui::is_active) {
+			Gui::Tick();
+		}
+		
 		ImGui::Render();
 		Gui::DX11Resources::pContext->OMSetRenderTargets(1, &Gui::DX11Resources::pRenderTargetView, nullptr);
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -68,6 +66,7 @@ HRESULT __stdcall Callback::Present::hkPresent(IDXGISwapChain* pSwapChain, UINT 
 		to this else statement. At that point its expected to have my own functions kiero impliments but they will be more modular.
 		*/
 		Hooks::DX11Hook::getInstance().shutdown();
+		Cheat::shutdown = true;
 	}
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }

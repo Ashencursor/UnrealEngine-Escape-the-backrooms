@@ -23,7 +23,7 @@ void MainThread()
     DirectXHook.initialize();
 
     // Main loop
-    while (!Gui::shutdown) {
+    while (!Cheat::shutdown) {
         Sleep(10);
     }
     Sleep(1000);// Let hkPresent finish up before terminating this all.

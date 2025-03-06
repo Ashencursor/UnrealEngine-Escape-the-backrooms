@@ -4,5 +4,6 @@
 
 namespace Cheat
 {
+	inline bool shutdown = false;
 	void Tick();
 }

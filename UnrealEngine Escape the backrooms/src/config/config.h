@@ -24,4 +24,9 @@ namespace Config
 
 	inline bool jump = false;
 	inline float jump_power{};
+
+	inline bool ESP = false;
+	inline bool box3DESP = false;
+	inline bool box2DESP = false;
+	inline float ESP_dist = 1000.0f;
 };

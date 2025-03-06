@@ -1554,6 +1554,7 @@
     <ClInclude Include="src\Hooks\callbacks.h" />
     <ClInclude Include="src\Hooks\dx11Hook.h" />
     <ClInclude Include="src\Hooks\hooks.h" />
+    <ClInclude Include="src\Math\Vector.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ProgressReport.txt" />

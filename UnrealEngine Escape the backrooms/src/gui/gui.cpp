@@ -58,7 +58,17 @@ void menuAimbotTab()
 }
 void menuVisualsTab() 
 {
+	ImGui::Checkbox("ESP", &Config::ESP);
+	if (Config::ESP)
+	{
+		ImGui::Checkbox("Box ESP(3d)", &Config::box3DESP);
+		// Call functions or something that will draw boxes onto the ABC_DroppedItems
+		if (Config::box3DESP)
+		{
 
+		}
+
+	}
 }
 // FIC AND ORGINIZE THIS SHIT
 void menuExploitsTab()
@@ -80,9 +90,13 @@ void menuExploitsTab()
 		ImGui::SliderFloat("Walk Speed Value", &Config::walk_speed, 0.0f, 10000.0f);
 		if (MovementComponent)
 		{
+			MovementComponent->MaxWalkSpeedCrouched = Config::walk_speed;
+			MovementComponent->MaxAcceleration = Config::walk_speed;
 			MovementComponent->MaxWalkSpeed = Config::walk_speed;
 		}
 	}
+
+	// Lags shit out
 	// FLYING
 	/*ImGui::Checkbox("Fly Hack", &Config::fly);
 	if (Config::fly)
@@ -113,7 +127,6 @@ void menuExploitsTab()
 		Config::gravity_pull = 1.0f;
 	}
 	*/
-
 }
 void menuWindowsTab()
 {
@@ -160,7 +173,7 @@ void Gui::renderCustomCursor()
 	ImVec2 rectStart = ImVec2(Gui::cursor_pos.x, Gui::cursor_pos.y);
 	ImVec2 rectEnd = ImVec2(Gui::cursor_pos.x + 10, Gui::cursor_pos.y + 10);
 
-	ImGui::GetForegroundDrawList()->AddRectFilled(rectStart, rectEnd, IM_COL32(0, 0, 0, 255)); // Black rectangle
+	ImGui::GetForegroundDrawList()->AddRectFilled(rectStart, rectEnd, IM_COL32_WHITE); // Black rectangle
 }
 
 
@@ -171,6 +184,7 @@ void droppedItems();
 void Gui::Tick()
 {
 	renderMainMenu();
+
 	// Update player info and make sure its all valid. 
 	if (Config::items_window)
 	{

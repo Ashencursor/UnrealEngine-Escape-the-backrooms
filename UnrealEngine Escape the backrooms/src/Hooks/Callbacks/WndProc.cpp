@@ -14,13 +14,10 @@ LRESULT __stdcall Callback::WndProc::hkWndProc(HWND hWnd, UINT uMsg, WPARAM wPar
 		ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam);
 
 
-
-
 		// Handle Imgui toggle
 		if (uMsg == WM_KEYUP && wParam == VK_F9)
 		{
 			Gui::is_active = !Gui::is_active;
-			ShowCursor(Gui::is_active ? FALSE : TRUE);
 			return 0; // Mark as handled
 		}
 		if (uMsg == WM_KEYUP && wParam == VK_DELETE)
